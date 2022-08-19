@@ -22,9 +22,6 @@ function App() {
       console.log(error);
       console.log('====================================');
     }
-    console.log('====================================');
-    console.log(orders);
-    console.log('====================================');
   };
 
   function compare(a, b) {
