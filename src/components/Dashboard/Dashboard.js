@@ -71,11 +71,16 @@ export default function Dashboard({ orders }) {
     e.preventDefault();
     let target = e.target.value;
 
-    if (target !== 0) {
+    console.log('====================================');
+    console.log(target);
+    console.log('====================================');
+
+    if (target !== '0') {
       setFilteredOrders(orders.filter((x) => x.productName.includes(target)));
-    } else {
-      setFilteredOrders(orders);
+      return;
     }
+
+    setFilteredOrders(orders);
   }
 
   useEffect(() => {
@@ -88,9 +93,24 @@ export default function Dashboard({ orders }) {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <Typography variant="h4" gutterBottom>
-        Orders
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          m: '10px',
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Orders
+        </Typography>
+
+        <Box>
+          <Typography variant="h5" sx={{ fontWeight: '700' }}>
+            Total Orders:{filteredOrders.length}
+          </Typography>
+        </Box>
+      </Box>
       <Divider />
       <Box
         sx={{
@@ -129,6 +149,7 @@ export default function Dashboard({ orders }) {
               onChange={handleNameFilter}
             >
               <MenuItem value={'0'}>All</MenuItem>
+              <MenuItem value={'capzic'}>Capzic</MenuItem>
               <MenuItem value={'neurite'}>Neurite</MenuItem>
             </Select>
           </FormControl>
@@ -146,8 +167,8 @@ export default function Dashboard({ orders }) {
           <CSVLink ref={myRef} filename="orders.csv" data={filteredOrders} />
         </Box>
       </Box>
-      <TableContainer sx={{ maxHeight: '100vh' }}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer sx={{ maxHeight: 570 }}>
+        <Table stickyHeader={true} aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -171,7 +192,7 @@ export default function Dashboard({ orders }) {
                 <TableCell>{order.city}</TableCell>
                 <TableCell>{order.mobile}</TableCell>
                 <TableCell>{order.date}</TableCell>
-                <TableCell>{order.mobile} </TableCell>
+                <TableCell>{order.quantity} </TableCell>
               </TableRow>
             ))}
           </TableBody>
